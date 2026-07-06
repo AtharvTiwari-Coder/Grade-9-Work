@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>See what Students Did</title>
+    <style>
+      :root {
+        --bg: #191919;
+        --text: #ededed;
+        --muted: rgba(237, 237, 237, 0.75);
+        --card-bg: rgba(34, 34, 34, 0.85);
+        --accent: #9be7ff;
+        --neon-white: rgba(255, 255, 255, 0.95);
+        --glow: rgba(255, 255, 255, 0.06);
+        --fade-duration: 1800ms;
+      }
+
+      .theme-white {
+        --bg: #ffffff;
+        --text: #000000;
+        --muted: rgba(0, 0, 0, 0.65);
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --accent: #0b84ff;
+        --neon-white: rgba(0, 0, 0, 0.95);
+        --glow: rgba(0, 0, 0, 0.06);
+      }
+
+      .theme-dark {
+        --bg: #191919;
+        --text: #ededed;
+        --muted: rgba(237, 237, 237, 0.75);
+        --card-bg: rgba(34, 34, 34, 0.85);
+        --accent: #9be7ff;
+        --neon-white: rgba(255, 255, 255, 0.95);
+        --glow: rgba(255, 255, 255, 0.06);
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        transition:
+          background-color var(--fade-duration) ease,
+          color var(--fade-duration) ease;
+        overflow: auto;
+      }
+
+      .site-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 28px;
+        box-sizing: border-box;
+      }
+      .heading-box {
+        display: inline-block;
+        padding: 14px 22px;
+        border-radius: 28px;
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        box-shadow: 0 8px 30px var(--glow);
+        transition:
+          box-shadow 260ms ease,
+          transform 160ms ease,
+          border-color 260ms ease;
+        user-select: none;
+        cursor: default;
+      }
+      .heading-box h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text);
+        font-weight: 700;
+      }
+      .heading-box:hover {
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 12px 48px rgba(255, 255, 255, 0.18);
+        transform: translateY(-2px);
+      }
+      .theme-white .heading-box {
+        border-color: rgba(0, 0, 0, 0.12);
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.02),
+          rgba(0, 0, 0, 0.01)
+        );
+      }
+      .theme-white .heading-box:hover {
+        border-color: rgba(0, 0, 0, 0.9);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        transform: translateY(-2px);
+      }
+
+      .theme-slider {
+        position: relative;
+        margin-left: auto;
+        width: 170px;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        pointer-events: auto;
+        z-index: 10;
+      }
+      .theme-slider input[type="range"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 36px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border-radius: 20px;
+        padding: 6px;
+        outline: none;
+        box-shadow: 0 6px 20px var(--glow);
+        transition:
+          box-shadow var(--fade-duration) ease,
+          background-color var(--fade-duration) ease;
+      }
+      .theme-slider input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #fff, #ddd);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+        transition:
+          transform 180ms ease,
+          background 180ms ease;
+      }
+      .theme-labels {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 11px;
+        color: var(--muted);
+        opacity: 0.95;
+        user-select: none;
+      }
+
+      .container {
+        display: flex;
+        flex: 1;
+        gap: 20px;
+        padding: 12px 28px;
+        box-sizing: border-box;
+        overflow: visible;
+      }
+      .sidebar {
+        width: 220px;
+        min-width: 180px;
+        max-width: 260px;
+        background: var(--card-bg);
+        border-radius: 14px;
+        padding: 12px;
+        box-shadow: 0 8px 30px var(--glow);
+        overflow: visible;
+      }
+      .sidebar h2 {
+        margin: 6px 0 12px;
+        font-size: 14px;
+        color: var(--text);
+        letter-spacing: 0.6px;
+      }
+      .subject-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .subject-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: var(--text);
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        background: transparent;
+      }
+      .subject-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+      }
+      .subject-item.active {
+        background: linear-gradient(
+          90deg,
+          rgba(155, 231, 255, 0.04),
+          rgba(155, 231, 255, 0.02)
+        );
+        border-color: rgba(155, 231, 255, 0.12);
+      }
+      .subject-item .count {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .main {
+        flex: 1;
+        padding: 6px 12px;
+        overflow: visible;
+      }
+      .main-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+        padding: 12px;
+      }
+      .card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 8px 30px var(--glow);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .card .meta {
+        font-size: 13px;
+        color: var(--muted);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .card .meta b {
+        color: var(--text);
+        font-weight: 700;
+      }
+      .card .file-type {
+        font-size: 12px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.06);
+        display: inline-block;
+        width: max-content;
+        color: var(--text);
+      }
+
+      .empty-state {
+        padding: 36px;
+        text-align: center;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .subtext {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .credit {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 18px;
+        color: var(--text);
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 0 6px 18px rgba(155, 231, 255, 0.06);
+        font-size: 13px;
+        pointer-events: none;
+      }
+      .credit strong {
+        color: var(--text);
+      }
+      .theme-white .credit {
+        color: var(--text);
+        text-shadow: none;
+      }
+
+      @media (max-width: 880px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          max-height: 220px;
+        }
+        .theme-slider {
+          width: 150px;
+          margin-left: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-header">
+      <div class="heading-box" tabindex="-1">
+        <h1 id="main-title">See what Students Did</h1>
+      </div>
+
+      <div class="theme-slider" title="Theme" aria-hidden="false">
+        <input
+          id="themeSelect"
+          type="range"
+          min="0"
+          max="2"
+          value="0"
+          aria-label="Theme slider"
+        />
+        <div class="theme-labels" aria-hidden="true">
+          <span data-val="0">System</span><span data-val="1">Dark</span
+          ><span data-val="2">White</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" role="main" aria-labelledby="main-title">
+      <aside class="sidebar" aria-label="Subjects">
+        <h2>Subjects</h2>
+        <div class="subject-list" id="subjectList" role="list"></div>
+      </aside>
+
+      <section class="main" aria-live="polite">
+        <div
+          id="subjectHeader"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+          "
+        >
+          <h2
+            id="subjectTitle"
+            style="margin: 6px 0 12px; font-size: 18px; color: var(--text)"
+          ></h2>
+          <div class="subtext" id="subjectCount"></div>
+        </div>
+
+        <div id="mainGrid" class="main-grid" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state" style="display: none">
+          No Content Uploaded Here Yet...
+        </div>
+      </section>
+    </div>
+
+    <div class="credit">CREATED BY <strong>"ATHARV TIWARI"</strong></div>
+
+    <script>
+      const STORAGE_KEY = "grade9work-theme";
+      const themeRange = document.getElementById("themeSelect");
+      const bodyEl = document.body;
+
+      function applyThemeMode(mode, immediate = false) {
+        if (immediate) bodyEl.classList.add("no-fade");
+        bodyEl.classList.remove("theme-dark", "theme-white");
+        if (mode === "system") {
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          bodyEl.classList.add(prefersDark ? "theme-dark" : "theme-white");
+        } else if (mode === "dark") bodyEl.classList.add("theme-dark");
+        else bodyEl.classList.add("theme-white");
+        if (immediate) {
+          void bodyEl.offsetWidth;
+          setTimeout(() => bodyEl.classList.remove("no-fade"), 40);
+        } else {
+          bodyEl.classList.add("theme-fading");
+          setTimeout(() => bodyEl.classList.remove("theme-fading"), 2040);
+        }
+      }
+
+      function sliderToMode(v) {
+        return v === "0" ? "system" : v === "1" ? "dark" : "white";
+      }
+
+      let saved = localStorage.getItem(STORAGE_KEY) || "system";
+      themeRange.value =
+        saved === "system" ? "0" : saved === "dark" ? "1" : "2";
+      applyThemeMode(saved);
+
+      const mq = window.matchMedia("(prefers-color-scheme: dark)");
+      const mqHandler = () => {
+        if (
+          localStorage.getItem(STORAGE_KEY) === "system" ||
+          !localStorage.getItem(STORAGE_KEY)
+        )
+          applyThemeMode("system");
+      };
+      if (mq.addEventListener) mq.addEventListener("change", mqHandler);
+      else if (mq.addListener) mq.addListener(mqHandler);
+
+      let prevExplicit = saved === "system" ? null : saved;
+      themeRange.addEventListener("input", (e) => {
+        const newMode = sliderToMode(e.target.value);
+        const prev = prevExplicit;
+        const directSwap =
+          prev &&
+          (prev === "dark" || prev === "white") &&
+          (newMode === "dark" || newMode === "white") &&
+          prev !== newMode;
+        if (directSwap) {
+          localStorage.setItem(STORAGE_KEY, newMode);
+          applyThemeMode(newMode, true);
+        } else {
+          localStorage.setItem(STORAGE_KEY, newMode);
+          applyThemeMode(newMode, false);
+        }
+        prevExplicit =
+          newMode === "dark" || newMode === "white" ? newMode : null;
+      });
+
+      const SUBJECTS = [
+        "AI",
+        "ENGLISH",
+        "HINDI",
+        "IDA",
+        "LIBRARY",
+        "MATHEMATICS",
+        "PA",
+        "SANSKRIT",
+        "SCIENCE",
+        "SOCIAL SCIENCE",
+        "VA",
+        "VE",
+      ];
+      const CONTENT_STORE = {
+        AI: [],
+        ENGLISH: [],
+        HINDI: [],
+        IDA: [],
+        LIBRARY: [],
+        MATHEMATICS: [],
+        PA: [],
+        SANSKRIT: [],
+        SCIENCE: [],
+        "SOCIAL SCIENCE": [],
+        VA: [],
+        VE: [],
+      };
+
+      const subjectListEl = document.getElementById("subjectList");
+      const mainGrid = document.getElementById("mainGrid");
+      const subjectTitle = document.getElementById("subjectTitle");
+      const subjectCount = document.getElementById("subjectCount");
+      const emptyState = document.getElementById("emptyState");
+
+      function createSubjectItem(name) {
+        const el = document.createElement("div");
+        el.className = "subject-item";
+        el.setAttribute("role", "listitem");
+        el.tabIndex = 0;
+        el.innerHTML = `<span style="color:var(--text)">${name}</span><span class="count">${CONTENT_STORE[name].length}</span>`;
+        el.addEventListener("click", () => selectSubject(name, el));
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectSubject(name, el);
+          }
+        });
+        return el;
+      }
+
+      function renderSubjects() {
+        subjectListEl.innerHTML = "";
+        SUBJECTS.forEach((s) =>
+          subjectListEl.appendChild(createSubjectItem(s)),
+        );
+        const first = subjectListEl.querySelector(".subject-item");
+        if (first) first.click();
+      }
+
+      function clearActiveSubject() {
+        subjectListEl
+          .querySelectorAll(".subject-item")
+          .forEach((i) => i.classList.remove("active"));
+      }
+
+      function selectSubject(name, el) {
+        clearActiveSubject();
+        el.classList.add("active");
+        subjectTitle.textContent = name;
+        const files = CONTENT_STORE[name] || [];
+        subjectCount.textContent = `${files.length} item${files.length !== 1 ? "s" : ""}`;
+        renderFiles(files);
+      }
+
+      function renderFiles(files) {
+        mainGrid.innerHTML = "";
+        if (!files || files.length === 0) {
+          emptyState.style.display = "block";
+          return;
+        }
+        emptyState.style.display = "none";
+        files.forEach((f) => {
+          const card = document.createElement("article");
+          card.className = "card";
+          const title = document.createElement("div");
+          title.style.fontWeight = "800";
+          title.style.color = "var(--text)";
+          title.textContent = f.ContentName || "Untitled";
+          const meta = document.createElement("div");
+          meta.className = "meta";
+          meta.innerHTML = `<div><b>Author</b>: ${f.Author || "Unknown"}</div>
+                          <div><b>Date</b>: ${f.DatePublished || "Unknown"}</div>
+                          <div><b>Category</b>: ${f.Category || "Uncategorized"}</div>
+                          <div class="file-type">${(f.Type || "").toUpperCase()}</div>`;
+          const actions = document.createElement("div");
+          actions.style.marginTop = "8px";
+          if (f.Path) {
+            const a = document.createElement("a");
+            a.href = f.Path;
+            a.textContent = "Open";
+            a.className = "neon-btn";
+            a.style.padding = "8px 12px";
+            a.style.fontSize = "13px";
+            a.style.display = "inline-block";
+            a.setAttribute("role", "button");
+            actions.appendChild(a);
+          } else {
+            const span = document.createElement("span");
+            span.className = "subtext";
+            span.textContent = "No preview available";
+            actions.appendChild(span);
+          }
+          card.appendChild(title);
+          card.appendChild(meta);
+          card.appendChild(actions);
+          mainGrid.appendChild(card);
+        });
+      }
+
+      renderSubjects();
+
+      window.__addContentFor = function (subject, fileObj) {
+        if (!CONTENT_STORE[subject]) CONTENT_STORE[subject] = [];
+        CONTENT_STORE[subject].push(fileObj);
+        renderSubjects();
+      };
+
+      document.querySelectorAll(".heading-box").forEach((el) => {
+        el.addEventListener("click", (ev) => ev.preventDefault());
+        el.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter" || ev.key === " ") ev.preventDefault();
+        });
+      });
+    </script>
+  </body>
+</html>

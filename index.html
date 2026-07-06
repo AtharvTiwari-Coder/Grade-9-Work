@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Grade 9B Work</title>
+    <style>
+      :root {
+        --bg: #191919;
+        --text: #ededed;
+        --muted: rgba(237, 237, 237, 0.75);
+        --card-bg: rgba(34, 34, 34, 0.85);
+        --accent: #9be7ff;
+        --neon-white: rgba(255, 255, 255, 0.95);
+        --glow: rgba(255, 255, 255, 0.06);
+        --fade-duration: 1800ms;
+      }
+
+      .theme-white {
+        --bg: #e6e6e6;
+        --text: #121212;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --glow: rgba(0, 0, 0, 0.18);
+      }
+
+      .theme-dark {
+        --bg: #191919;
+        --text: #ededed;
+        --card-bg: rgba(34, 34, 34, 0.85);
+        --glow: rgba(255, 255, 255, 0.06);
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        transition:
+          background-color var(--fade-duration) ease,
+          color var(--fade-duration) ease;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 980px;
+        padding: 48px 24px;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .heading-box {
+        display: inline-block;
+        padding: 22px 36px;
+        border-radius: 40px;
+        border: 2px solid rgba(255, 255, 255, 0.12);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        box-shadow: 0 8px 30px var(--glow);
+        transition:
+          box-shadow 260ms ease,
+          transform 160ms ease,
+          border-color 260ms ease;
+        user-select: none;
+        cursor: default;
+        margin-bottom: 40px;
+      }
+
+      .heading-box h1 {
+        margin: 0;
+        font-size: 36px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--neon-white);
+        font-weight: 700;
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      }
+
+      .theme-white .heading-box h1 {
+        color: #000;
+        text-shadow: none;
+      }
+
+      .heading-box:hover {
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow:
+          0 12px 48px rgba(255, 255, 255, 0.18),
+          0 0 28px rgba(155, 231, 255, 0.12);
+        transform: translateY(-2px);
+      }
+
+      .theme-white .heading-box:hover {
+        border-color: #000;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        transform: translateY(-2px);
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin: 36px 0 28px;
+        flex-wrap: wrap;
+      }
+
+      .neon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 26px;
+        border-radius: 28px;
+        background: var(--card-bg);
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 0.6px;
+        box-shadow: 0 8px 30px var(--glow);
+        border: 2px solid rgba(255, 255, 255, 0.06);
+        transition:
+          transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1),
+          box-shadow 260ms ease,
+          border-color 260ms ease;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .neon-btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 18px 48px rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .neon-btn:active {
+        transform: scale(1.12);
+      }
+
+      .credit {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 18px;
+        color: var(--neon-white);
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 0 6px 18px rgba(155, 231, 255, 0.06);
+        font-size: 13px;
+        pointer-events: none;
+      }
+
+      .credit strong {
+        color: var(--neon-white);
+        text-shadow: 0 8px 28px rgba(255, 255, 255, 0.12);
+      }
+
+      .theme-white .credit,
+      .theme-white .credit strong {
+        color: #000;
+        text-shadow: none;
+      }
+
+      .theme-slider {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        width: 170px;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        pointer-events: auto;
+      }
+
+      .theme-slider input[type="range"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 36px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border-radius: 20px;
+        padding: 6px;
+        outline: none;
+        box-shadow: 0 6px 20px var(--glow);
+        transition:
+          box-shadow var(--fade-duration) ease,
+          background-color var(--fade-duration) ease;
+      }
+
+      .theme-slider input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #fff, #ddd);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+        transition:
+          transform 180ms ease,
+          background 180ms ease;
+      }
+
+      .theme-slider input[type="range"]::-moz-range-thumb {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #fff, #ddd);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+        transition:
+          transform 180ms ease,
+          background 180ms ease;
+      }
+
+      .theme-labels {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 11px;
+        color: var(--muted);
+        opacity: 0.95;
+        user-select: none;
+      }
+
+      .subtext {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .theme-white .subtext {
+        color: #000;
+        text-shadow: none;
+      }
+
+      @media (max-width: 520px) {
+        .heading-box h1 {
+          font-size: 22px;
+        }
+        .neon-btn {
+          font-size: 15px;
+          padding: 12px 18px;
+        }
+        .theme-slider {
+          width: 150px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADING -->
+    <div class="heading-box" tabindex="-1">
+      <h1 id="main-title">CLASS 9B WORK</h1>
+    </div>
+
+    <!-- MAMN=MAIN -->
+    <div class="wrap" role="main" aria-labelledby="main-title">
+      <div class="btn-row" role="navigation" aria-label="Primary actions">
+        <a
+          class="neon-btn"
+          href="Content.html"
+          role="button"
+          aria-label="See work by class 9B students"
+        >
+          See Work by Class 9B Students!
+        </a>
+        <a
+          class="neon-btn"
+          href="Upload.html"
+          role="button"
+          aria-label="Upload your own work"
+        >
+          Upload Your Own Work.
+        </a>
+      </div>
+
+      <div class="subtext" aria-hidden="true">
+        Upload images, PDFs or text. Your content will be processed and then
+        publicly available.
+      </div>
+    </div>
+
+    <div class="theme-slider" title="Theme">
+      <input
+        id="themeSelect"
+        type="range"
+        min="0"
+        max="2"
+        value="0"
+        aria-label="Theme slider"
+      />
+      <div class="theme-labels" aria-hidden="true">
+        <span data-val="0">System</span>
+        <span data-val="1">Dark</span>
+        <span data-val="2">White</span>
+      </div>
+    </div>
+
+    <div class="credit">CREATED BY <strong>"ATHARV TIWARI"</strong></div>
+
+    <script>
+      const themeRange = document.getElementById("themeSelect");
+      const bodyEl = document.body;
+      const STORAGE_KEY = "grade9work-theme";
+
+      function applyThemeMode(mode, immediate = false) {
+        if (immediate) {
+          bodyEl.classList.add("no-fade");
+        }
+        bodyEl.classList.remove("theme-dark", "theme-white");
+
+        if (mode === "system") {
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          bodyEl.classList.add(prefersDark ? "theme-dark" : "theme-white");
+        } else if (mode === "dark") {
+          bodyEl.classList.add("theme-dark");
+        } else {
+          bodyEl.classList.add("theme-white");
+        }
+
+        if (immediate) {
+          void bodyEl.offsetWidth;
+          setTimeout(() => bodyEl.classList.remove("no-fade"), 40);
+        } else {
+          bodyEl.classList.add("theme-fading");
+          setTimeout(() => bodyEl.classList.remove("theme-fading"), 2040);
+        }
+      }
+
+      function sliderToMode(v) {
+        return v === "0" ? "system" : v === "1" ? "dark" : "white";
+      }
+
+      let saved = localStorage.getItem(STORAGE_KEY) || "system";
+      const initialVal =
+        saved === "system" ? "0" : saved === "dark" ? "1" : "2";
+      themeRange.value = initialVal;
+      applyThemeMode(saved);
+
+      const mq = window.matchMedia("(prefers-color-scheme: dark)");
+      const mqHandler = () => {
+        if (
+          localStorage.getItem(STORAGE_KEY) === "system" ||
+          !localStorage.getItem(STORAGE_KEY)
+        ) {
+          applyThemeMode("system");
+        }
+      };
+      if (mq.addEventListener) mq.addEventListener("change", mqHandler);
+      else if (mq.addListener) mq.addListener(mqHandler);
+
+      let prevExplicit = saved === "system" ? null : saved;
+      themeRange.addEventListener("input", (e) => {
+        const newMode = sliderToMode(e.target.value);
+        const prev = prevExplicit;
+        const directSwap =
+          prev &&
+          (prev === "dark" || prev === "white") &&
+          (newMode === "dark" || newMode === "white") &&
+          prev !== newMode;
+
+        if (directSwap) {
+          localStorage.setItem(STORAGE_KEY, newMode);
+          applyThemeMode(newMode, true);
+        } else {
+          localStorage.setItem(STORAGE_KEY, newMode);
+          applyThemeMode(newMode, false);
+        }
+
+        prevExplicit =
+          newMode === "dark" || newMode === "white" ? newMode : null;
+      });
+
+      document.querySelectorAll(".heading-box").forEach((el) => {
+        el.addEventListener("click", (ev) => ev.preventDefault());
+        el.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter" || ev.key === " ") ev.preventDefault();
+        });
+      });
+    </script>
+  </body>
+</html>
