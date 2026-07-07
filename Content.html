@@ -11,28 +11,24 @@
         --muted: rgba(237, 237, 237, 0.75);
         --card-bg: rgba(34, 34, 34, 0.85);
         --accent: #9be7ff;
-        --neon-white: rgba(255, 255, 255, 0.95);
+        --accent-2: #6ee7b7;
         --glow: rgba(255, 255, 255, 0.06);
         --fade-duration: 1800ms;
       }
-
       .theme-white {
         --bg: #ffffff;
         --text: #000000;
         --muted: rgba(0, 0, 0, 0.65);
         --card-bg: rgba(255, 255, 255, 0.95);
         --accent: #0b84ff;
-        --neon-white: rgba(0, 0, 0, 0.95);
         --glow: rgba(0, 0, 0, 0.06);
       }
-
       .theme-dark {
         --bg: #191919;
         --text: #ededed;
         --muted: rgba(237, 237, 237, 0.75);
         --card-bg: rgba(34, 34, 34, 0.85);
         --accent: #9be7ff;
-        --neon-white: rgba(255, 255, 255, 0.95);
         --glow: rgba(255, 255, 255, 0.06);
       }
 
@@ -58,7 +54,7 @@
         transition:
           background-color var(--fade-duration) ease,
           color var(--fade-duration) ease;
-        overflow: auto;
+        overflow: hidden;
       }
 
       .site-header {
@@ -69,7 +65,6 @@
         box-sizing: border-box;
       }
       .heading-box {
-        display: inline-block;
         padding: 14px 22px;
         border-radius: 28px;
         border: 2px solid rgba(255, 255, 255, 0.12);
@@ -79,10 +74,6 @@
           rgba(255, 255, 255, 0.01)
         );
         box-shadow: 0 8px 30px var(--glow);
-        transition:
-          box-shadow 260ms ease,
-          transform 160ms ease,
-          border-color 260ms ease;
         user-select: none;
         cursor: default;
       }
@@ -94,40 +85,17 @@
         color: var(--text);
         font-weight: 700;
       }
-      .heading-box:hover {
-        border-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 12px 48px rgba(255, 255, 255, 0.18);
-        transform: translateY(-2px);
-      }
-      .theme-white .heading-box {
-        border-color: rgba(0, 0, 0, 0.12);
-        background: linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0.02),
-          rgba(0, 0, 0, 0.01)
-        );
-      }
-      .theme-white .heading-box:hover {
-        border-color: rgba(0, 0, 0, 0.9);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-        transform: translateY(-2px);
-      }
 
       .theme-slider {
-        position: relative;
         margin-left: auto;
         width: 170px;
-        background: transparent;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 6px;
-        pointer-events: auto;
         z-index: 10;
       }
       .theme-slider input[type="range"] {
-        -webkit-appearance: none;
-        -moz-appearance: none;
         appearance: none;
         width: 100%;
         height: 36px;
@@ -140,12 +108,8 @@
         padding: 6px;
         outline: none;
         box-shadow: 0 6px 20px var(--glow);
-        transition:
-          box-shadow var(--fade-duration) ease,
-          background-color var(--fade-duration) ease;
       }
       .theme-slider input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
         appearance: none;
         width: 36px;
         height: 36px;
@@ -153,9 +117,6 @@
         background: linear-gradient(180deg, #fff, #ddd);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
         cursor: pointer;
-        transition:
-          transform 180ms ease,
-          background 180ms ease;
       }
       .theme-labels {
         display: flex;
@@ -164,7 +125,6 @@
         font-size: 11px;
         color: var(--muted);
         opacity: 0.95;
-        user-select: none;
       }
 
       .container {
@@ -173,7 +133,7 @@
         gap: 20px;
         padding: 12px 28px;
         box-sizing: border-box;
-        overflow: visible;
+        overflow: hidden;
       }
       .sidebar {
         width: 220px;
@@ -183,7 +143,7 @@
         border-radius: 14px;
         padding: 12px;
         box-shadow: 0 8px 30px var(--glow);
-        overflow: visible;
+        overflow: auto;
       }
       .sidebar h2 {
         margin: 6px 0 12px;
@@ -203,7 +163,6 @@
         padding: 10px 12px;
         border-radius: 10px;
         color: var(--text);
-        text-decoration: none;
         cursor: pointer;
         border: 1px solid rgba(255, 255, 255, 0.04);
         background: transparent;
@@ -228,7 +187,7 @@
       .main {
         flex: 1;
         padding: 6px 12px;
-        overflow: visible;
+        overflow: auto;
       }
       .main-grid {
         display: grid;
@@ -267,13 +226,71 @@
         color: var(--text);
       }
 
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      .open-btn,
+      .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        color: #07121a;
+        font-weight: 700;
+        text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        transition:
+          transform 160ms ease,
+          box-shadow 160ms ease,
+          filter 160ms ease;
+      }
+      .open-btn {
+        background: linear-gradient(
+          90deg,
+          var(--accent),
+          rgba(11, 132, 255, 0.6)
+        );
+        box-shadow:
+          0 6px 18px rgba(11, 132, 255, 0.12),
+          0 1px 0 rgba(255, 255, 255, 0.04) inset;
+      }
+      .open-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 40px rgba(11, 132, 255, 0.18);
+      }
+      .download-btn {
+        background: linear-gradient(
+          90deg,
+          var(--accent-2),
+          rgba(110, 231, 183, 0.6)
+        );
+        box-shadow:
+          0 6px 18px rgba(110, 231, 183, 0.12),
+          0 1px 0 rgba(255, 255, 255, 0.04) inset;
+      }
+      .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 40px rgba(110, 231, 183, 0.18);
+      }
+      .btn-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.85));
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) inset;
+      }
+
       .empty-state {
         padding: 36px;
         text-align: center;
         color: var(--muted);
         font-weight: 700;
       }
-
       .subtext {
         margin-top: 6px;
         color: var(--muted);
@@ -292,12 +309,51 @@
         font-size: 13px;
         pointer-events: none;
       }
-      .credit strong {
-        color: var(--text);
-      }
       .theme-white .credit {
-        color: var(--text);
         text-shadow: none;
+      }
+
+      .sidebar::-webkit-scrollbar {
+        width: 14px;
+      }
+      .sidebar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 10px;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          180deg,
+          rgba(155, 231, 255, 0.22),
+          rgba(155, 231, 255, 0.12)
+        );
+        border-radius: 10px;
+        border: 3px solid transparent;
+        background-clip: padding-box;
+      }
+      .sidebar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(155, 231, 255, 0.22) rgba(255, 255, 255, 0.02);
+      }
+
+      .main::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      .main::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .main::-webkit-scrollbar-thumb {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 255, 255, 0.06)
+        );
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) inset;
+      }
+      .main {
+        scrollbar-width: auto;
+        scrollbar-color: rgba(255, 255, 255, 0.12) rgba(255, 255, 255, 0.01);
       }
 
       @media (max-width: 880px) {
@@ -320,8 +376,7 @@
       <div class="heading-box" tabindex="-1">
         <h1 id="main-title">See what Students Did</h1>
       </div>
-
-      <div class="theme-slider" title="Theme" aria-hidden="false">
+      <div class="theme-slider" title="Theme">
         <input
           id="themeSelect"
           type="range"
@@ -447,20 +502,7 @@
         "VA",
         "VE",
       ];
-      const CONTENT_STORE = {
-        AI: [],
-        ENGLISH: [],
-        HINDI: [],
-        IDA: [],
-        LIBRARY: [],
-        MATHEMATICS: [],
-        PA: [],
-        SANSKRIT: [],
-        SCIENCE: [],
-        "SOCIAL SCIENCE": [],
-        VA: [],
-        VE: [],
-      };
+      let CONTENT_STORE = {};
 
       const subjectListEl = document.getElementById("subjectList");
       const mainGrid = document.getElementById("mainGrid");
@@ -473,7 +515,8 @@
         el.className = "subject-item";
         el.setAttribute("role", "listitem");
         el.tabIndex = 0;
-        el.innerHTML = `<span style="color:var(--text)">${name}</span><span class="count">${CONTENT_STORE[name].length}</span>`;
+        const count = (CONTENT_STORE[name] && CONTENT_STORE[name].length) || 0;
+        el.innerHTML = `<span style="color:var(--text)">${name}</span><span class="count">${count}</span>`;
         el.addEventListener("click", () => selectSubject(name, el));
         el.addEventListener("keydown", (e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -506,6 +549,8 @@
         const files = CONTENT_STORE[name] || [];
         subjectCount.textContent = `${files.length} item${files.length !== 1 ? "s" : ""}`;
         renderFiles(files);
+        const mainSection = document.querySelector(".main");
+        if (mainSection) mainSection.scrollTop = 0;
       }
 
       function renderFiles(files) {
@@ -518,34 +563,47 @@
         files.forEach((f) => {
           const card = document.createElement("article");
           card.className = "card";
+
           const title = document.createElement("div");
           title.style.fontWeight = "800";
           title.style.color = "var(--text)";
           title.textContent = f.ContentName || "Untitled";
+
           const meta = document.createElement("div");
           meta.className = "meta";
           meta.innerHTML = `<div><b>Author</b>: ${f.Author || "Unknown"}</div>
-                          <div><b>Date</b>: ${f.DatePublished || "Unknown"}</div>
-                          <div><b>Category</b>: ${f.Category || "Uncategorized"}</div>
-                          <div class="file-type">${(f.Type || "").toUpperCase()}</div>`;
+                            <div><b>Date</b>: ${f.DatePublished || "Unknown"}</div>
+                            <div><b>Category</b>: ${f.Category || "Uncategorized"}</div>
+                            <div class="file-type">${(f.Type || "").toUpperCase()}</div>`;
+
           const actions = document.createElement("div");
-          actions.style.marginTop = "8px";
+          actions.className = "actions";
+
           if (f.Path) {
-            const a = document.createElement("a");
-            a.href = f.Path;
-            a.textContent = "Open";
-            a.className = "neon-btn";
-            a.style.padding = "8px 12px";
-            a.style.fontSize = "13px";
-            a.style.display = "inline-block";
-            a.setAttribute("role", "button");
-            actions.appendChild(a);
+            const open = document.createElement("a");
+            open.href = f.Path;
+            open.target = "_blank";
+            open.rel = "noopener noreferrer";
+            open.className = "open-btn";
+            open.setAttribute("role", "button");
+            open.innerHTML = `<span class="btn-dot" aria-hidden="true"></span>Open`;
+            actions.appendChild(open);
+
+            const download = document.createElement("a");
+            download.href = f.Path;
+            download.className = "download-btn";
+            download.setAttribute("role", "button");
+            download.dataset.path = f.Path;
+            download.dataset.name = f.ContentName || "";
+            download.innerHTML = `<span class="btn-dot" aria-hidden="true"></span>Download`;
+            actions.appendChild(download);
           } else {
             const span = document.createElement("span");
             span.className = "subtext";
             span.textContent = "No preview available";
             actions.appendChild(span);
           }
+
           card.appendChild(title);
           card.appendChild(meta);
           card.appendChild(actions);
@@ -553,7 +611,56 @@
         });
       }
 
-      renderSubjects();
+      // track last download times per path
+      const lastDownloadTimes = {};
+
+      // handle download clicks with 5-second warning
+      mainGrid.addEventListener("click", (e) => {
+        const dl = e.target.closest(".download-btn");
+        if (!dl) return;
+        e.preventDefault();
+        const path = dl.dataset.path;
+        const name = dl.dataset.name || "";
+        const now = Date.now();
+        const last = lastDownloadTimes[path] || 0;
+        const within = now - last < 5000;
+        if (within) {
+          const ok = confirm(
+            "You downloaded this file just now. Do you want to download it again?",
+          );
+          if (!ok) return;
+        }
+        // perform download by creating a temporary anchor to ensure download attribute works
+        const a = document.createElement("a");
+        a.href = path;
+        if (name) a.download = name;
+        else a.download = "";
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        lastDownloadTimes[path] = Date.now();
+      });
+
+      async function loadContentData() {
+        try {
+          const res = await fetch("ContentData.json", { cache: "no-store" });
+          if (!res.ok) throw new Error("no data");
+          const data = await res.json();
+          CONTENT_STORE = {};
+          SUBJECTS.forEach(
+            (s) => (CONTENT_STORE[s] = Array.isArray(data[s]) ? data[s] : []),
+          );
+          renderSubjects();
+        } catch (err) {
+          CONTENT_STORE = {};
+          SUBJECTS.forEach((s) => (CONTENT_STORE[s] = []));
+          renderSubjects();
+          console.error("Failed to load ContentData.json", err);
+        }
+      }
+
+      loadContentData();
 
       window.__addContentFor = function (subject, fileObj) {
         if (!CONTENT_STORE[subject]) CONTENT_STORE[subject] = [];
