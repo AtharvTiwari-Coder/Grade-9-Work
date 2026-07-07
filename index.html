@@ -257,6 +257,66 @@
         text-shadow: none;
       }
 
+      /* bottom-left version + update button container */
+      .version-area {
+        position: fixed;
+        left: 12px;
+        bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        pointer-events: auto;
+        z-index: 60;
+      }
+
+      .version-text {
+        color: var(--neon-white);
+        font-weight: 700;
+        font-size: 13px;
+        pointer-events: none; /* non-interactive text */
+        user-select: none;
+        text-shadow: 0 6px 18px rgba(155, 231, 255, 0.06);
+      }
+
+      .update-log-btn {
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: linear-gradient(
+          90deg,
+          var(--accent),
+          rgba(11, 132, 255, 0.6)
+        );
+        color: #07121a;
+        font-weight: 800;
+        text-decoration: none;
+        border: 0;
+        box-shadow: 0 8px 30px rgba(11, 132, 255, 0.12);
+        transition:
+          transform 160ms ease,
+          box-shadow 160ms ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .update-log-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 40px rgba(11, 132, 255, 0.18);
+      }
+
+      .update-log-btn:active {
+        transform: translateY(-1px);
+        filter: brightness(0.98);
+      }
+
+      .update-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.85));
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) inset;
+      }
+
       @media (max-width: 520px) {
         .heading-box h1 {
           font-size: 22px;
@@ -268,6 +328,11 @@
         .theme-slider {
           width: 150px;
         }
+        .version-area {
+          left: 8px;
+          bottom: 8px;
+          gap: 8px;
+        }
       }
     </style>
   </head>
@@ -277,7 +342,7 @@
       <h1 id="main-title">CLASS 9B WORK</h1>
     </div>
 
-    <!-- MAMN=MAIN -->
+    <!-- MAIN -->
     <div class="wrap" role="main" aria-labelledby="main-title">
       <div class="btn-row" role="navigation" aria-label="Primary actions">
         <a
@@ -297,13 +362,13 @@
           Upload Your Own Work.
         </a>
       </div>
-
       <div class="subtext" aria-hidden="true">
         Upload images, PDFs or text. Your content will be processed and then
         publicly available.
       </div>
     </div>
 
+    <!-- Theme slider -->
     <div class="theme-slider" title="Theme">
       <input
         id="themeSelect"
@@ -321,6 +386,21 @@
     </div>
 
     <div class="credit">CREATED BY <strong>"ATHARV TIWARI"</strong></div>
+
+    <!-- bottom-left version + update button -->
+    <div class="version-area" aria-hidden="false">
+      <div class="version-text">Current Version: 0.8.2</div>
+      <a
+        class="update-log-btn"
+        href="Update.txt"
+        role="button"
+        aria-label="Open update log"
+        target="_self"
+      >
+        <span class="update-dot" aria-hidden="true"></span>
+        Open Update Log
+      </a>
+    </div>
 
     <script>
       const themeRange = document.getElementById("themeSelect");

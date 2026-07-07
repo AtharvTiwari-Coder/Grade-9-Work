@@ -1,0 +1,42 @@
+Update Log - Grade 9 Work Website
+
+Version 0.1
+- Initial setup: making the website available online
+- Basic HTML structure created
+
+Version 0.2
+- Added subject sidebar with placeholder entries
+- Implemented theme switcher (System/Dark/White)
+
+Version 0.3
+- Introduced responsive design for mobile (media queries)
+- Sidebar collapses on smaller screens
+
+Version 0.4
+- Added content grid layout for subject files
+- Empty state message when no content is uploaded
+
+Version 0.5
+- LocalStorage support for theme persistence
+- Smooth theme transition animations
+
+Version 0.6
+- Subject selection updates main content dynamically
+- File cards show metadata (Author, Date, Category, Type)
+
+Version 0.7
+- Added stylish “Open” button for file access
+- Improved scrollbar styling for sidebar and main content
+
+Version 0.8
+- Added “Download” button alongside “Open”
+- Warning prompt if downloading the same file again within 5 seconds
+
+Version 0.8.1
+- Normalized Category field to match Subjects
+- Cleaned up unnecessary code and comments
+
+Version 0.8.2 (Current)
+- ContentData.json integrated for external data storage
+- Website fetches subject content dynamically
+- Current status: fully functional with subject-based content loading, theme switching, and file actions
